@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FilmOto - Film & Dizi Platformu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2d3436;
+            --secondary: #636e72;
+            --accent: #e74c3c;
+            --accent-light: #ff6b6b;
+            --light: #f5f6fa;
+            --dark: #1a1a1a;
+            --card-bg: #ffffff;
+            --shadow: 0 8px 30px rgba(0,0,0,0.1);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --radius: 15px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: var(--light);
+            color: var(--primary);
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: var(--gradient);
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: white;
+        }
+        
+        .logo h1 {
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav a:hover,
+        .nav a.active {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border: none;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.9);
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            background: white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary);
+        }
+        
+        .hero {
+            padding: 100px 0 60px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 30px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid #e0e0e0;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .movie-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .movie-poster {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        
+        .movie-info {
+            padding: 20px;
+        }
+        
+        .movie-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+            height: 60px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .movie-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .movie-year {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        
+        .movie-rating {
+            background: var(--gradient);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .movie-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .watch-btn {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .favorite-btn {
+            background: #f1f2f6;
+            color: var(--primary);
+        }
+        
+        .favorite-btn.active {
+            background: var(--accent-light);
+            color: white;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            background: var(--gradient);
+            border-radius: 3px;
+        }
+        
+        .view-all {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: gap 0.3s ease;
+        }
+        
+        .view-all:hover {
+            gap: 15px;
+        }
+        
+        .filters {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            margin-top: 30px;
+        }
+        
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .filter-group label {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .filter-group select:focus,
+        .filter-group input:focus {
+            border-color: var(--accent);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            overflow-y: auto;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 50px auto;
+            padding: 40px;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: var(--radius);
+            position: relative;
+            animation: modalSlide 0.3s ease;
+        }
+        
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--secondary);
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--accent);
+        }
+        
+        .modal-body {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 40px;
+        }
+        
+        .modal-poster {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .modal-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .modal-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .modal-rating {
+            background: var(--gradient);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+        
+        .modal-overview {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--secondary);
+            margin-bottom: 30px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 60px;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .loading i {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: var(--gradient);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            z-index: 3000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        @media (max-width: 1024px) {
+            .modal-body {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-poster {
+                width: 300px;
+                margin: 0 auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav {
+                gap: 10px;
+            }
+            
+            .nav a {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            
+            .search-box {
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .modal-content {
+                padding: 20px;
+                margin: 20px auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-film"></i>
+                    <h1>FilmOto</h1>
+                </div>
+                
+                <nav class="nav">
+                    <a href="#" class="active" onclick="showSection('trending')"><i class="fas fa-fire"></i> Trend</a>
+                    <a href="#" onclick="showSection('movies')"><i class="fas fa-film"></i> Filmler</a>
+                    <a href="#" onclick="showSection('tv')"><i class="fas fa-tv"></i> Diziler</a>
+                    <a href="#" onclick="showFavorites()"><i class="fas fa-heart"></i> Favoriler</a>
+                </nav>
+                
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Film veya dizi ara...">
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Sınırsız Film & Dizi Keyfi</h2>
+                <p>En popüler filmler, diziler ve yeni çıkan içeriklerle dolu kütüphanemizi keşfedin. Ruh halinize göre öneriler alın ve favorilerinizi kaydedin.</p>
+                
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="showSection('movies')">
+                        <i class="fas fa-play"></i> Filmleri Keşfet
+                    </button>
+                    <button class="btn btn-secondary" onclick="showSection('tv')">
+                        <i class="fas fa-tv"></i> Dizileri Keşfet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section id="trendingSection" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Bugünün Trendleri</h2>
+                <a href="#" class="view-all" onclick="loadMore('trending')">
+                    Daha Fazla
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div class="content-grid" id="trendingGrid">
+            </div>
+        </section>
+        
+        <section id="moviesSection" class="section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Popüler Filmler</h2>
+            </div>
+            
+            <div class="filters">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label>Tür</label>
+                        <select id="movieGenre" onchange="filterMovies()">
+                            <option value="">Tüm Türler</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Yıl</label>
+                        <select id="movieYear" onchange="filterMovies()">
+                            <option value="">Tüm Yıllar</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Sırala</label>
+                        <select id="movieSort" onchange="filterMovies()">
+                            <option value="popularity.desc">Popülerlik</option>
+                            <option value="vote_average.desc">Yüksek Puan</option>
+                            <option value="release_date.desc">En Yeni</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-grid" id="moviesGrid">
+            </div>
+        </section>
+        
+        <section id="tvSection" class="section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Popüler Diziler</h2>
+            </div>
+            
+            <div class="filters">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label>Tür</label>
+                        <select id="tvGenre" onchange="filterTV()">
+                            <option value="">Tüm Türler</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Yıl</label>
+                        <select id="tvYear" onchange="filterTV()">
+                            <option value="">Tüm Yıllar</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Sırala</label>
+                        <select id="tvSort" onchange="filterTV()">
+                            <option value="popularity.desc">Popülerlik</option>
+                            <option value="vote_average.desc">Yüksek Puan</option>
+                            <option value="first_air_date.desc">En Yeni</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-grid" id="tvGrid">
+            </div>
+        </section>
+        
+        <section id="favoritesSection" class="section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Favorilerim</h2>
+                <button class="btn btn-secondary" onclick="clearFavorites()">
+                    <i class="fas fa-trash"></i> Favorileri Temizle
+                </button>
+            </div>
+            
+            <div class="content-grid" id="favoritesGrid">
+            </div>
+        </section>
+        
+        <section id="searchSection" class="section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Arama Sonuçları</h2>
+                <span id="searchCount">0 sonuç bulundu</span>
+            </div>
+            
+            <div class="content-grid" id="searchGrid">
+            </div>
+        </section>
+        
+        <div id="loading" class="loading" style="display: none;">
+            <i class="fas fa-spinner"></i>
+            <p>Yükleniyor...</p>
+        </div>
+    </main>
+    
+    <div id="movieModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modalBody" class="modal-body">
+            </div>
+        </div>
+    </div>
+    
+    <div id="notification" class="notification">
+        <span id="notificationText">Favorilere eklendi!</span>
+    </div>
+
+    <script>
+        // tmdb api key //
+        const TMDB_API_KEY = '7ab2cd89c9d9310314cc7a0145656d2e';
+        const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
+        
+        let favorites = JSON.parse(localStorage.getItem('filmOto_favorites')) || [];
+        let currentSection = 'trending';
+        let searchTimeout;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTrending();
+            loadMovieGenres();
+            loadTVGenres();
+            populateYearFilters();
+            
+            document.getElementById('searchInput').addEventListener('input', function(e) {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    if (e.target.value.trim()) {
+                        searchContent(e.target.value);
+                    } else {
+                        showSection(currentSection);
+                    }
+                }, 500);
+            });
+            
+            console.log('Başlangıçta favoriler:', favorites);
+        });
+        
+        async function loadTrending() {
+            showLoading(true);
+            try {
+                const response = await fetch(
+                    `${TMDB_BASE_URL}/trending/all/week?api_key=${TMDB_API_KEY}&language=tr-TR&page=1`
+                );
+                const data = await response.json();
+                displayContent(data.results.slice(0, 12), 'trendingGrid');
+            } catch (error) {
+                console.error('Hata:', error);
+                document.getElementById('trendingGrid').innerHTML = 
+                    '<p style="text-align: center; grid-column: 1/-1; padding: 40px; color: var(--accent);">İçerik yüklenemedi.</p>';
+            }
+            showLoading(false);
+        }
+        
+        async function loadMovies() {
+            showLoading(true);
+            try {
+                const genre = document.getElementById('movieGenre').value;
+                const year = document.getElementById('movieYear').value;
+                const sort = document.getElementById('movieSort').value;
+                
+                let url = `${TMDB_BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}&language=tr-TR&page=1`;
+                
+                if (genre) {
+                    url = `${TMDB_BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&language=tr-TR&page=1&with_genres=${genre}&sort_by=${sort}`;
+                }
+                
+                if (year) {
+                    url += `&primary_release_year=${year}`;
+                }
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                displayContent(data.results, 'moviesGrid');
+            } catch (error) {
+                console.error('Hata:', error);
+                showNotification('Filmler yüklenemedi');
+            }
+            showLoading(false);
+        }
+        
+        async function loadTV() {
+            showLoading(true);
+            try {
+                const genre = document.getElementById('tvGenre').value;
+                const year = document.getElementById('tvYear').value;
+                const sort = document.getElementById('tvSort').value;
+                
+                let url = `${TMDB_BASE_URL}/tv/popular?api_key=${TMDB_API_KEY}&language=tr-TR&page=1`;
+                
+                if (genre) {
+                    url = `${TMDB_BASE_URL}/discover/tv?api_key=${TMDB_API_KEY}&language=tr-TR&page=1&with_genres=${genre}&sort_by=${sort}`;
+                }
+                
+                if (year) {
+                    url += `&first_air_date_year=${year}`;
+                }
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                displayContent(data.results, 'tvGrid');
+            } catch (error) {
+                console.error('Hata:', error);
+                showNotification('Diziler yüklenemedi');
+            }
+            showLoading(false);
+        }
+        
+        async function loadMovieGenres() {
+            try {
+                const response = await fetch(
+                    `${TMDB_BASE_URL}/genre/movie/list?api_key=${TMDB_API_KEY}&language=tr-TR`
+                );
+                const data = await response.json();
+                
+                const select = document.getElementById('movieGenre');
+                data.genres.forEach(genre => {
+                    const option = document.createElement('option');
+                    option.value = genre.id;
+                    option.textContent = genre.name;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Film türleri yüklenemedi:', error);
+            }
+        }
+        
+        async function loadTVGenres() {
+            try {
+                const response = await fetch(
+                    `${TMDB_BASE_URL}/genre/tv/list?api_key=${TMDB_API_KEY}&language=tr-TR`
+                );
+                const data = await response.json();
+                
+                const select = document.getElementById('tvGenre');
+                data.genres.forEach(genre => {
+                    const option = document.createElement('option');
+                    option.value = genre.id;
+                    option.textContent = genre.name;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Dizi türleri yüklenemedi:', error);
+            }
+        }
+        
+        function populateYearFilters() {
+            const currentYear = new Date().getFullYear();
+            const yearSelects = [
+                document.getElementById('movieYear'),
+                document.getElementById('tvYear')
+            ];
+            
+            yearSelects.forEach(select => {
+                for (let year = currentYear; year >= 1980; year--) {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year;
+                    select.appendChild(option);
+                }
+            });
+        }
+        
+        // içerik kısmı - fixed - //
+        function displayContent(items, containerId) {
+            const container = document.getElementById(containerId);
+            if (!items || items.length === 0) {
+                container.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px;">İçerik bulunamadı.</p>';
+                return;
+            }
+            
+            container.innerHTML = items.map(item => {
+                const isMovie = item.media_type === 'movie' || item.title;
+                const title = item.title || item.name || 'Bilinmeyen';
+                const year = (item.release_date || item.first_air_date || '').substring(0, 4) || '-';
+                const rating = item.vote_average ? item.vote_average.toFixed(1) : '0.0';
+                
+                let posterUrl;
+                if (item.poster_path) {
+                    posterUrl = `https://image.tmdb.org/t/p/w500${item.poster_path}`;
+                } else if (item.poster && item.poster.includes('http')) {
+                    posterUrl = item.poster;
+                } else {
+                    posterUrl = 'https://via.placeholder.com/500x750/667eea/ffffff?text=' + encodeURIComponent(title.substring(0, 15));
+                }
+                
+                const isFavorite = favorites.some(fav => 
+                    String(fav.id) === String(item.id) && fav.type === (isMovie ? 'movie' : 'tv')
+                );
+                
+                return `
+                    <div class="movie-card">
+                        <img src="${posterUrl}" alt="${title}" class="movie-poster" 
+                             onclick="showDetail(${item.id}, '${isMovie ? 'movie' : 'tv'}')">
+                        <div class="movie-info">
+                            <h3 class="movie-title">${title}</h3>
+                            <div class="movie-meta">
+                                <span class="movie-year">${year}</span>
+                                <span class="movie-rating">★ ${rating}</span>
+                            </div>
+                            <div class="movie-actions">
+                                <button class="action-btn watch-btn" 
+                                        onclick="event.stopPropagation(); showDetail(${item.id}, '${isMovie ? 'movie' : 'tv'}')">
+                                    <i class="fas fa-play"></i> Detay
+                                </button>
+                                <button class="action-btn favorite-btn ${isFavorite ? 'active' : ''}" 
+                                        onclick="event.stopPropagation(); toggleFavorite(${item.id}, '${isMovie ? 'movie' : 'tv'}', '${cleanText(title)}', '${posterUrl}')">
+                                    <i class="fas fa-heart"></i> ${isFavorite ? 'Favori' : 'Favori'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function cleanText(text) {
+            return text.replace(/'/g, "\\'").replace(/"/g, '\\"');
+        }
+        
+        async function showDetail(id, type) {
+            showLoading(true);
+            try {
+                const response = await fetch(
+                    `${TMDB_BASE_URL}/${type}/${id}?api_key=${TMDB_API_KEY}&language=tr-TR`
+                );
+                const data = await response.json();
+                
+                const isFavorite = favorites.some(fav => 
+                    String(fav.id) === String(id) && fav.type === type
+                );
+                
+                const posterUrl = data.poster_path 
+                    ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
+                    : 'https://via.placeholder.com/500x750/667eea/ffffff?text=' + encodeURIComponent((data.title || data.name || '').substring(0, 15));
+                
+                document.getElementById('modalBody').innerHTML = `
+                    <img src="${posterUrl}" alt="${data.title || data.name}" class="modal-poster">
+                    <div class="modal-info">
+                        <h2>${data.title || data.name}</h2>
+                        <div class="modal-meta">
+                            <span class="modal-rating">★ ${data.vote_average ? data.vote_average.toFixed(1) : '0.0'}</span>
+                            <span>${(data.release_date || data.first_air_date || '').substring(0, 4)}</span>
+                            <span>${data.runtime || data.episode_run_time?.[0] || '-'} dk</span>
+                        </div>
+                        <p class="modal-overview">${data.overview || 'Açıklama bulunamadı.'}</p>
+                        <div class="modal-actions">
+                            <button class="btn btn-primary" onclick="playTrailer(${id}, '${type}')">
+                                <i class="fas fa-play"></i> Fragman İzle
+                            </button>
+                            <button class="btn btn-secondary ${isFavorite ? 'active' : ''}" 
+                                    onclick="toggleFavorite(${id}, '${type}', '${cleanText(data.title || data.name)}', '${posterUrl}')">
+                                <i class="fas fa-heart"></i> ${isFavorite ? 'Favorilerden Çıkar' : 'Favorilere Ekle'}
+                            </button>
+                        </div>
+                        ${data.genres ? `<p><strong>Türler:</strong> ${data.genres.map(g => g.name).join(', ')}</p>` : ''}
+                    </div>
+                `;
+                
+                document.getElementById('movieModal').style.display = 'block';
+            } catch (error) {
+                console.error('Detay yüklenemedi:', error);
+                showNotification('Detaylar yüklenemedi');
+            }
+            showLoading(false);
+        }
+        
+        function closeModal() {
+            document.getElementById('movieModal').style.display = 'none';
+        }
+        
+        function toggleFavorite(id, type, title, posterUrl) {
+            console.log('Toggle favorite çağrıldı:', {id, type, title});
+            console.log('Mevcut favoriler:', favorites);
+            
+            const favId = String(id);
+            const index = favorites.findIndex(fav => 
+                String(fav.id) === favId && fav.type === type
+            );
+            
+            if (index === -1) {
+                const newFavorite = {
+                    id: favId,
+                    type: type,
+                    title: title,
+                    poster: posterUrl,
+                    dateAdded: new Date().toISOString()
+                };
+                favorites.push(newFavorite);
+                showNotification('Favorilere eklendi!');
+                console.log('Favori eklendi:', newFavorite);
+            } else {
+                favorites.splice(index, 1);
+                showNotification('Favorilerden çıkarıldı!');
+                console.log('Favori çıkarıldı, id:', favId);
+            }
+            
+            localStorage.setItem('filmOto_favorites', JSON.stringify(favorites));
+            console.log('Güncellenmiş favoriler:', favorites);
+            
+            refreshCurrentPage();
+        }
+        
+        function refreshCurrentPage() {
+            if (currentSection === 'trending') {
+                loadTrending();
+            } else if (currentSection === 'movies') {
+                loadMovies();
+            } else if (currentSection === 'tv') {
+                loadTV();
+            } else if (currentSection === 'favorites') {
+                showFavorites();
+            } else if (currentSection === 'search') {
+                const searchQuery = document.getElementById('searchInput').value;
+                if (searchQuery) searchContent(searchQuery);
+            }
+        }
+        
+        // fav kısmı - fixed - //
+        function showFavorites() {
+            console.log('Favoriler gösteriliyor, favori sayısı:', favorites.length);
+            
+            showSection('favorites');
+            
+            const container = document.getElementById('favoritesGrid');
+            
+            if (favorites.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; grid-column: 1/-1; padding: 60px;">
+                        <i class="fas fa-heart" style="font-size: 4rem; color: #ddd; margin-bottom: 20px;"></i>
+                        <h3 style="margin-bottom: 10px; color: var(--secondary);">Henüz favori eklenmemiş</h3>
+                        <p style="color: var(--secondary);">Film veya dizi kartlarındaki kalp ikonuna tıklayarak favorilere ekleyebilirsiniz.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const favoriteItems = favorites.map(fav => {
+                return {
+                    id: fav.id,
+                    title: fav.title,
+                    name: fav.title,
+                    poster_path: null,
+                    poster: fav.poster,
+                    vote_average: 0,
+                    release_date: '',
+                    media_type: fav.type
+                };
+            });
+            
+            console.log('Gösterilecek favori öğeleri:', favoriteItems);
+            displayContent(favoriteItems, 'favoritesGrid');
+        }
+        
+        function clearFavorites() {
+            if (confirm('Tüm favorilerinizi temizlemek istediğinize emin misiniz?')) {
+                favorites = [];
+                localStorage.removeItem('filmOto_favorites');
+                showFavorites();
+                showNotification('Favoriler temizlendi!');
+            }
+        }
+        
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(sec => {
+                sec.style.display = 'none';
+            });
+            
+            document.getElementById('searchSection').style.display = 'none';
+            
+            document.querySelectorAll('.nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            document.getElementById(`${section}Section`).style.display = 'block';
+            
+            const activeLink = Array.from(document.querySelectorAll('.nav a')).find(link => 
+                link.textContent.includes(
+                    section === 'trending' ? 'Trend' :
+                    section === 'movies' ? 'Filmler' :
+                    section === 'tv' ? 'Diziler' : 'Favoriler'
+                )
+            );
+            if (activeLink) activeLink.classList.add('active');
+            
+            currentSection = section;
+            
+            if (section === 'trending') {
+                loadTrending();
+            } else if (section === 'movies') {
+                loadMovies();
+            } else if (section === 'tv') {
+                loadTV();
+            } else if (section === 'favorites') {
+                const container = document.getElementById('favoritesGrid');
+                if (favorites.length > 0) {
+                    const favoriteItems = favorites.map(fav => ({
+                        id: fav.id,
+                        title: fav.title,
+                        name: fav.title,
+                        poster_path: null,
+                        poster: fav.poster,
+                        vote_average: 0,
+                        release_date: '',
+                        media_type: fav.type
+                    }));
+                    displayContent(favoriteItems, 'favoritesGrid');
+                } else {
+                    container.innerHTML = `
+                        <div style="text-align: center; grid-column: 1/-1; padding: 60px;">
+                            <i class="fas fa-heart" style="font-size: 4rem; color: #ddd; margin-bottom: 20px;"></i>
+                            <h3 style="margin-bottom: 10px; color: var(--secondary);">Henüz favori eklenmemiş</h3>
+                            <p style="color: var(--secondary);">Film veya dizi kartlarındaki kalp ikonuna tıklayarak favorilere ekleyebilirsiniz.</p>
+                        </div>
+                    `;
+                }
+            }
+        }
+        
+        function filterMovies() {
+            loadMovies();
+        }
+        
+        function filterTV() {
+            loadTV();
+        }
+        
+        async function searchContent(query) {
+            if (!query.trim()) return;
+            
+            showLoading(true);
+            try {
+                const response = await fetch(
+                    `${TMDB_BASE_URL}/search/multi?api_key=${TMDB_API_KEY}&language=tr-TR&query=${encodeURIComponent(query)}&page=1`
+                );
+                const data = await response.json();
+                
+                const results = data.results.filter(item => 
+                    (item.media_type === 'movie' || item.media_type === 'tv') && 
+                    (item.title || item.name)
+                );
+                
+                document.querySelectorAll('.section').forEach(sec => {
+                    sec.style.display = 'none';
+                });
+                document.getElementById('searchSection').style.display = 'block';
+                document.getElementById('searchCount').textContent = `${results.length} sonuç bulundu`;
+                
+                currentSection = 'search';
+                displayContent(results, 'searchGrid');
+            } catch (error) {
+                console.error('Arama hatası:', error);
+                showNotification('Arama yapılamadı');
+            }
+            showLoading(false);
+        }
+        
+        function playTrailer(id, type) {
+            showNotification('Fragman özelliği yakında eklenecek!');
+        }
+        
+        function loadMore(section) {
+            showNotification('Daha fazla içerik yükleniyor...');
+        }
+        
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+        
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.querySelector('#notificationText').textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        window.onclick = function(event) {
+            const modal = document.getElementById('movieModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+        
+        function debugClearStorage() {
+            if (confirm('Debug: Tüm localStorage verilerini temizlemek istiyor musunuz?')) {
+                localStorage.clear();
+                favorites = [];
+                location.reload();
+            }
+        }
+        
+        function debugLogFavorites() {
+            console.log('Favoriler:', favorites);
+            console.log('LocalStorage:', localStorage.getItem('filmOto_favorites'));
+        }
+    </script>
+    
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
+        <button onclick="debugLogFavorites()" style="background: #333; color: white; padding: 5px 10px; border: none; border-radius: 5px; margin: 2px; font-size: 12px;">Favorileri Logla</button>
+        <button onclick="debugClearStorage()" style="background: #e74c3c; color: white; padding: 5px 10px; border: none; border-radius: 5px; margin: 2px; font-size: 12px;">Storage'ı Temizle</button>
+    </div>
+</body>
+</html>
