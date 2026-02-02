@@ -11,11 +11,8 @@ Uygulama; trend içerikler, arama, ruh haline göre öneriler ve premium bir kul
 
 - 🎥 Haftalık trend film & diziler
 - 🔍 Anlık film/dizi arama (debounce ile)
-- 😌 Ruh haline göre içerik önerme
-- 🌙 Dark mode odaklı modern tasarım
 - 📱 Responsive (mobil / tablet / desktop)
 - ⚡ Hızlı ve akıcı kullanıcı deneyimi
-- 🎨 Netflix benzeri premium UI
 
 ---
 
